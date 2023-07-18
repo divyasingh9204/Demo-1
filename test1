@@ -26,6 +26,7 @@ pipeline {
                 snDevOpsStep ()
                 sh 'mvn test -Dpublish'
                 junit '**/target/surefire-reports/*.xml'
+                snDevOpsChange()
             }
         }
         
