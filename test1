@@ -1,0 +1,59 @@
+pipeline {
+
+   agent any
+
+   tools {
+
+     maven "Maven"
+
+  }
+
+   stages {
+
+       stage("build") {
+
+           steps {
+
+               snDevOpsStep ()
+
+               sh 'mvn clean install -DskipTests'
+
+             sh 'mvn test -Dpublish'
+
+                junit '**/target/surefire-reports/*.xml'
+
+           }
+
+       }
+
+       stage("test") {
+
+            steps {
+
+               snDevOpsStep ()
+
+              sh 'mvn test -Dpublish'
+
+                junit '**/target/surefire-reports/*.xml'
+
+            }
+
+        }
+
+       stage("deploy") {
+
+           steps {
+
+               snDevOpsStep ()   
+
+               sh 'mvn test -Dpublish'
+
+                junit '**/target/surefire-reports/*.xml'
+
+           }
+
+       }     
+
+   }
+
+}
